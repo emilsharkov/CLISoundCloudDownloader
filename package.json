@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "soundcloud-scraper": "^5.0.3"
+  }
+}
