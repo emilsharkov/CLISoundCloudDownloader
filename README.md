@@ -8,7 +8,7 @@ Step 1: Make sure you have Node.js and git installed on your local machine
 
 Step 2: Open a terminal and type ```git clone https://github.com/emilsharkov/CLISoundCloudDownloader.git```
 
-Step 3: Navigate to the CLISoundCloudDownloader folder and type ```npm install ```
+Step 3: In your terminal, navigate to the CLISoundCloudDownloader folder and type ```npm install ```
 
 ## Usage
 
