@@ -16,9 +16,9 @@ Step 3: In your terminal, navigate to the CLISoundCloudDownloader folder and typ
 
 Step 4: Once all the packages are installed, you can run the application by typing either of the following in your terminal:
 
-```node CLISoundCloudDownloader <soundcloud url>``` to download an mp3 file with the title from SoundCloud
+```node CLISoundCloudDownloader '<soundcloud url>'``` to download an mp3 file with the title from SoundCloud
 
-```node CLISoundCloudDownloader <soundcloud url> <new name>``` to download an mp3 file with a new name instead
+```node CLISoundCloudDownloader '<soundcloud url>' <new name>``` to download an mp3 file with a new name instead
 
 Step 5: Once run you will find the corresponding mp3 file in your Downloads folder
 
