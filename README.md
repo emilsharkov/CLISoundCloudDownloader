@@ -2,6 +2,8 @@
 
 CLISoundCloudDownloader is a Node.js command-line interface for downloading mp3 files from the music platform SoundCloud by using the SoundCloud-Scraper API
 
+![](https://github.com/emilsharkov/CLISoundCloudDownloader/blob/main/CLISoundCloudDownloaderDemo.gif)
+
 ## Requirements
 
 Step 1: Make sure you have Node.js and git installed on your local machine
