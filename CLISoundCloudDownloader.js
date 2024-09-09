@@ -20,6 +20,7 @@ const editMp3CoverArt = async (songPath,artworkPath) => {
 
 const downloadTrack = async (url, downloadsDirectory) => {
     const track = await soundcloud.tracks.get(url)
+    if((/[\\/:*?"<>|]/).test(track.title)) { return }
     const songDest = await soundcloud.util.downloadTrack(track,downloadsDirectory)
     const artworkDest = await soundcloud.util.downloadSongCover(track,downloadsDirectory)
     await editMp3CoverArt(songDest,artworkDest)
