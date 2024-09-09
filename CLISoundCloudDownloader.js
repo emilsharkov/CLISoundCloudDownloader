@@ -1,39 +1,69 @@
-const SoundCloud = require("soundcloud-scraper");
-const client = new SoundCloud.Client();
-const fs = require("fs");
+import fs from "fs"
+import nid3 from "node-id3"
+import { Soundcloud } from 'soundcloud.ts';
+const soundcloud = new Soundcloud()
 
-const main = async => {
-    var downloadFolder = process.env.USERPROFILE + '\\Downloads';
-    if(process.argv.length != 3 && process.argv.length != 4){
-        console.log("Usage: node soundcloud2spotify.js <SONG URL> (<new name>)")
-        process.exit()
+const editMp3CoverArt = async (songPath,artworkPath) => {
+    const tags = nid3.read(songPath);
+    tags.image = {
+        mime: "image/jpeg",
+        type: {
+            id: 3, // Cover (front) image
+            name: "front"
+        },
+        description: "Cover",
+        imageBuffer: fs.readFileSync(artworkPath)
+    };
+    nid3.write(tags, songPath);
+    console.log(`Added cover art to: ${songPath}`);
+};
+
+const downloadTrack = async (url, downloadsDirectory) => {
+    const track = await soundcloud.tracks.get(url)
+    const songDest = await soundcloud.util.downloadTrack(track,downloadsDirectory)
+    const artworkDest = await soundcloud.util.downloadSongCover(track,downloadsDirectory)
+    await editMp3CoverArt(songDest,artworkDest)
+    fs.unlinkSync(artworkDest)
+};
+
+const downloadPlaylist = async (url, downloadsDirectory) => {
+    const playlist = await soundcloud.playlists.get(url)
+    for (const track of playlist.tracks) {
+        console.log(`Downloading: ${track.title}`);
+        console.log(track.uri)
+        await downloadTrack(track.uri, downloadsDirectory);
+    }
+    console.log(`All songs from the playlist are saved in ${downloadsDirectory}`);
+};
+
+const main = async () => {
+    const downloadFolder = process.env.USERPROFILE + '\\Downloads';
+    
+    if (process.argv.length < 3) {
+        console.log("Usage: node CLISoundCloudDownloader.js [-playlist] <URL>");
+        process.exit(1);
     }
 
-    let url = process.argv[2]
-    let parsedUrl = url.split("?")
-    console.log(url)
-    downloadSong(parsedUrl[0],downloadFolder)
-}
+    const isPlaylist = process.argv[2] === "-playlist";
+    const url = isPlaylist ? process.argv[3] : process.argv[2];
+    
+    if (!url) {
+        console.log("Invalid URL!");
+        process.exit(1);
+    }
 
-const downloadFile = async (song, downloadsDirectory) => {
-    process.chdir(downloadsDirectory)
-    let songName = process.argv.length === 3 ? song.title.replace(/[\\/:*?\"<>|]/g, ""): process.argv[3]
+    const parsedUrl = url.split("?")[0];
 
-    return new Promise(async resolve => {
-        const stream = await song.downloadProgressive();
-        const writer = stream.pipe(fs.createWriteStream(`./${songName}.mp3`));
-        writer.on("finish", () => {
-            console.log("Finished writing song!")
-            resolve()
-        })
-    })
-}
+    try {
+        if (isPlaylist) {
+            await downloadPlaylist(parsedUrl, downloadFolder);
+        } else {
+            await downloadSong(parsedUrl, downloadFolder);
+        }
+    } catch (error) {
+        console.error("Error:", error.message);
+        process.exit(1);
+    }
+};
 
-const downloadSong = async (url,downloadsDirectory) => {
-    console.log("Starting Download")
-    let song = await client.getSongInfo(url)
-    await downloadFile(song,downloadsDirectory)
-    console.log(`You may know find this song in ${downloadsDirectory}`)
-}
-
-main()
+main();

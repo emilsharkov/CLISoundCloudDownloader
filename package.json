@@ -1,5 +1,10 @@
 {
+  "type": "module",
   "dependencies": {
-    "soundcloud-scraper": "^5.0.3"
+    "node-id3": "^0.2.6",
+    "soundcloud.ts": "^0.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.4"
   }
 }

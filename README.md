@@ -1,33 +1,24 @@
 # CLISoundCloudDownloader
 
-## Demo
-
-![](https://github.com/emilsharkov/CLISoundCloudDownloader/blob/main/CLISoundCloudDownloaderDemo.gif)
-
 ## Description
 
-CLISoundCloudDownloader is a Node.js command-line interface for downloading mp3 files from the music platform SoundCloud by using the SoundCloud-Scraper API
+CLISoundCloudDownloader is quick CLI for downloading songs (with cover art) built on top of [SoundCloud.ts](https://www.npmjs.com/package/soundcloud.ts)
 
 ## Requirements
 
-Step 1: Make sure you have Node.js and git installed on your local machine
+- Node.js
+- npm
 
 ## Installation
 
-Step 2: Open a terminal and type ```git clone https://github.com/emilsharkov/CLISoundCloudDownloader.git```
+1. Type ```git clone https://github.com/emilsharkov/CLISoundCloudDownloader.git``` to clone the repository
 
-Step 3: In your terminal, navigate to the CLISoundCloudDownloader folder and type ```npm install ```
+2. Navigate to the CLISoundCloudDownloader folder and type ```npm install``` to install the dependencies
 
 ## Usage
 
-Step 4: Once all the packages are installed, you can run the application by typing either of the following in your terminal:
+The mp3 files will be sent to your /Downloads folder once you use: 
 
-```node CLISoundCloudDownloader '<soundcloud url>'``` to download an mp3 file with the title from SoundCloud
+- ```node CLISoundCloudDownloader.js '<soundcloud url>'``` to download the mp3
 
-```node CLISoundCloudDownloader '<soundcloud url>' <new name>``` to download an mp3 file with a new name instead
-
-Step 5: Once run you will find the corresponding mp3 file in your Downloads folder
-
-## Contributing
-
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+- ```node CLISoundCloudDownloader.js -playlist '<soundcloud playlist url>'``` to download the public playlist
