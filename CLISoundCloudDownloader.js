@@ -3,6 +3,19 @@ import nid3 from "node-id3"
 import { Soundcloud } from 'soundcloud.ts';
 const soundcloud = new Soundcloud()
 
+const getDumpFolder = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    const formattedDateTime = `${year}-${month}-${day}-${hours}-${minutes}-${seconds}`;
+    const dumpFolder = `${process.env.USERPROFILE}\\Downloads\\${formattedDateTime}`;
+    return dumpFolder
+}
+
 const editMp3CoverArt = async (songPath,artworkPath) => {
     const tags = nid3.read(songPath);
     tags.image = {
@@ -38,7 +51,7 @@ const downloadPlaylist = async (url, downloadsDirectory) => {
 };
 
 const main = async () => {
-    const downloadFolder = process.env.USERPROFILE + '\\Downloads';
+    const downloadFolder = getDumpFolder()
     
     if (process.argv.length < 3) {
         console.log("Usage: node CLISoundCloudDownloader.js [-playlist] <URL>");

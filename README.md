@@ -17,7 +17,7 @@ CLISoundCloudDownloader is quick CLI for downloading songs (with cover art) buil
 
 ## Usage
 
-The mp3 files will be sent to your /Downloads folder once you use: 
+The mp3 files will be sent to your ```/Downloads/{time}``` folder once you use: 
 
 - ```node CLISoundCloudDownloader.js '<soundcloud url>'``` to download the mp3
 
